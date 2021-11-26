@@ -70,17 +70,17 @@ pub trait WeightInfo {
 pub struct SubstrateWeight<T>(PhantomData<T>);
 impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	fn stake() -> Weight {
-		(187_000_000 as Weight)
+		(193_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(14 as Weight))
 			.saturating_add(T::DbWeight::get().writes(9 as Weight))
 	}
 	fn unstake() -> Weight {
-		(166_000_000 as Weight)
+		(173_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(10 as Weight))
 			.saturating_add(T::DbWeight::get().writes(7 as Weight))
 	}
 	fn bond() -> Weight {
-		(144_000_000 as Weight)
+		(147_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(12 as Weight))
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
@@ -90,12 +90,12 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
 	fn bond_extra() -> Weight {
-		(145_000_000 as Weight)
+		(147_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(12 as Weight))
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
 	fn settlement() -> Weight {
-		(202_000_000 as Weight)
+		(205_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(13 as Weight))
 			.saturating_add(T::DbWeight::get().writes(6 as Weight))
 	}
@@ -105,12 +105,12 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
 	fn rebond() -> Weight {
-		(140_000_000 as Weight)
+		(142_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(12 as Weight))
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
 	fn withdraw_unbonded() -> Weight {
-		(172_000_000 as Weight)
+		(180_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(12 as Weight))
 			.saturating_add(T::DbWeight::get().writes(5 as Weight))
 	}
@@ -133,51 +133,51 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
 	fn update_staking_pool_capacity() -> Weight {
-		(29_000_000 as Weight)
+		(31_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(1 as Weight))
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
 	fn update_xcm_fees_compensation() -> Weight {
-		(28_000_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(1 as Weight))
-			.saturating_add(T::DbWeight::get().writes(1 as Weight))
-	}
-	fn update_xcm_weight() -> Weight {
 		(30_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(1 as Weight))
 			.saturating_add(T::DbWeight::get().writes(1 as Weight))
 	}
+	fn update_xcm_weight() -> Weight {
+		(31_000_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(1 as Weight))
+			.saturating_add(T::DbWeight::get().writes(1 as Weight))
+	}
 	fn add_insurances() -> Weight {
-		(104_000_000 as Weight)
+		(106_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(5 as Weight))
 			.saturating_add(T::DbWeight::get().writes(4 as Weight))
 	}
 	fn payout_slashed() -> Weight {
-		(159_000_000 as Weight)
+		(166_000_000 as Weight)
 			.saturating_add(T::DbWeight::get().reads(13 as Weight))
 			.saturating_add(T::DbWeight::get().writes(6 as Weight))
 	}
 	fn on_idle() -> Weight {
-		(131_000_000 as Weight)
-			.saturating_add(T::DbWeight::get().reads(7 as Weight))
-			.saturating_add(T::DbWeight::get().writes(5 as Weight))
+		(11_845_000_000 as Weight)
+			.saturating_add(T::DbWeight::get().reads(205 as Weight))
+			.saturating_add(T::DbWeight::get().writes(203 as Weight))
 	}
 }
 
 // For backwards compatibility and tests
 impl WeightInfo for () {
 	fn stake() -> Weight {
-		(187_000_000 as Weight)
+		(193_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(14 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(9 as Weight))
 	}
 	fn unstake() -> Weight {
-		(166_000_000 as Weight)
+		(173_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(10 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(7 as Weight))
 	}
 	fn bond() -> Weight {
-		(144_000_000 as Weight)
+		(147_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(12 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
@@ -187,12 +187,12 @@ impl WeightInfo for () {
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
 	fn bond_extra() -> Weight {
-		(145_000_000 as Weight)
+		(147_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(12 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
 	fn settlement() -> Weight {
-		(202_000_000 as Weight)
+		(205_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(13 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(6 as Weight))
 	}
@@ -202,12 +202,12 @@ impl WeightInfo for () {
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
 	fn rebond() -> Weight {
-		(140_000_000 as Weight)
+		(142_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(12 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
 	fn withdraw_unbonded() -> Weight {
-		(172_000_000 as Weight)
+		(180_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(12 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
 	}
@@ -230,33 +230,33 @@ impl WeightInfo for () {
 			.saturating_add(RocksDbWeight::get().writes(1 as Weight))
 	}
 	fn update_staking_pool_capacity() -> Weight {
-		(29_000_000 as Weight)
+		(31_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(1 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(1 as Weight))
 	}
 	fn update_xcm_fees_compensation() -> Weight {
-		(28_000_000 as Weight)
-			.saturating_add(RocksDbWeight::get().reads(1 as Weight))
-			.saturating_add(RocksDbWeight::get().writes(1 as Weight))
-	}
-	fn update_xcm_weight() -> Weight {
 		(30_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(1 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(1 as Weight))
 	}
+	fn update_xcm_weight() -> Weight {
+		(31_000_000 as Weight)
+			.saturating_add(RocksDbWeight::get().reads(1 as Weight))
+			.saturating_add(RocksDbWeight::get().writes(1 as Weight))
+	}
 	fn add_insurances() -> Weight {
-		(104_000_000 as Weight)
+		(106_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(5 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(4 as Weight))
 	}
 	fn payout_slashed() -> Weight {
-		(159_000_000 as Weight)
+		(166_000_000 as Weight)
 			.saturating_add(RocksDbWeight::get().reads(13 as Weight))
 			.saturating_add(RocksDbWeight::get().writes(6 as Weight))
 	}
 	fn on_idle() -> Weight {
-		(131_000_000 as Weight)
-			.saturating_add(RocksDbWeight::get().reads(7 as Weight))
-			.saturating_add(RocksDbWeight::get().writes(5 as Weight))
+		(11_845_000_000 as Weight)
+			.saturating_add(RocksDbWeight::get().reads(205 as Weight))
+			.saturating_add(RocksDbWeight::get().writes(203 as Weight))
 	}
 }
