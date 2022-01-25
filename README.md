@@ -49,7 +49,7 @@ Click the following guides for more details:
 - [LAUNCH GUIDE](https://github.com/parallel-finance/parallel/blob/master/docs/LAUNCH.md)
 - [COLLATOR GUIDE](https://github.com/parallel-finance/parallel/blob/master/docs/COLLATOR.md)
 
-## Open Source Credits
+## Open Source Credits 1
 
 We would like to thank the following projects.
 
