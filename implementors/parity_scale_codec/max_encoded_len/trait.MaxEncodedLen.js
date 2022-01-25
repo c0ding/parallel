@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["pallet_liquidation"] = [{"text":"impl MaxEncodedLen for <a class=\"struct\" href=\"pallet_liquidation/crypto/struct.Public.html\" title=\"struct pallet_liquidation::crypto::Public\">Public</a>","synthetic":false,"types":["pallet_liquidation::crypto::Public"]}];
+implementors["parallel_primitives"] = [{"text":"impl MaxEncodedLen for <a class=\"enum\" href=\"parallel_primitives/ump/enum.ProxyType.html\" title=\"enum parallel_primitives::ump::ProxyType\">ProxyType</a>","synthetic":false,"types":["parallel_primitives::ump::ProxyType"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

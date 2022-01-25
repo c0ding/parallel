@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `primitives&#x2F;src&#x2F;tokens.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tokens.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../parallel_primitives/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+</pre><pre class="rust"><code><span class="comment">// Copyright 2021 Parallel Finance Developer.</span>
+<span class="comment">// This file is part of Parallel Finance.</span>
+
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
+
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::CurrencyId</span>;
+
+<span class="comment">// Native Token</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HKO</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PARA</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">1</span>;
+
+<span class="comment">// Polkadot ecosystem</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KSM</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DOT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">101</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">USDT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">102</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KUSD</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">103</span>;
+
+<span class="comment">// Liquid Staking Derivative</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XKSM</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">1000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XDOT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">1001</span>;
+
+<span class="comment">// Money Market Derivative</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PHKO</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PPARA</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2001</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PKSM</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PDOT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2101</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PUSDT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2102</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PKUSD</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2103</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PXKSM</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2200</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PXDOT</span>: <span class="ident">CurrencyId</span> <span class="op">=</span> <span class="number">2201</span>;
+
+<span class="comment">// Token Registration Information</span>
+<span class="comment">// +───────────+──────────────+────────────────────+</span>
+<span class="comment">// | Network   | Token        | Register in block  |</span>
+<span class="comment">// +───────────+──────────────+────────────────────+</span>
+<span class="comment">// | Heiko     | HKO          | Native             |</span>
+<span class="comment">// | Heiko     | PARA         | N/A                |</span>
+<span class="comment">// | Heiko     | KSM          | N/A                |</span>
+<span class="comment">// | Heiko     | DOT          | N/A                |</span>
+<span class="comment">// | Heiko     | USDT         | N/A                |</span>
+<span class="comment">// | Heiko     | KUSD         | N/A                |</span>
+<span class="comment">// | Heiko     | XKSM         | N/A                |</span>
+<span class="comment">// | Heiko     | XDOT         | N/A                |</span>
+<span class="comment">// | Heiko     | PHKO         | N/A                |</span>
+<span class="comment">// | Heiko     | PPARA        | N/A                |</span>
+<span class="comment">// | Heiko     | PKSM         | N/A                |</span>
+<span class="comment">// | Heiko     | PDOT         | N/A                |</span>
+<span class="comment">// | Heiko     | PUSDT        | N/A                |</span>
+<span class="comment">// | Heiko     | PXKSM        | N/A                |</span>
+<span class="comment">// | Heiko     | PXDOT        | N/A                |</span>
+<span class="comment">// | Parallel  | HKO          | N/A                |</span>
+<span class="comment">// | Parallel  | PARA         | Native             |</span>
+<span class="comment">// | Parallel  | KSM          | N/A                |</span>
+<span class="comment">// | Parallel  | DOT          | N/A                |</span>
+<span class="comment">// | Parallel  | USDT         | N/A                |</span>
+<span class="comment">// | Parallel  | KUSD         | N/A                |</span>
+<span class="comment">// | Parallel  | XKSM         | N/A                |</span>
+<span class="comment">// | Parallel  | XDOT         | N/A                |</span>
+<span class="comment">// | Parallel  | PHKO         | N/A                |</span>
+<span class="comment">// | Parallel  | PPARA        | N/A                |</span>
+<span class="comment">// | Parallel  | PKSM         | N/A                |</span>
+<span class="comment">// | Parallel  | PDOT         | N/A                |</span>
+<span class="comment">// | Parallel  | PUSDT        | N/A                |</span>
+<span class="comment">// | Parallel  | PXKSM        | N/A                |</span>
+<span class="comment">// | Parallel  | PXDOT        | N/A                |</span>
+<span class="comment">// +──────────+───────────────+────────────────────+</span>
+</code></pre></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="parallel_primitives" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>
